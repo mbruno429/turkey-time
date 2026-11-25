@@ -82,7 +82,7 @@ export function wordsearch(root) {
 
   function fit() {
     const room = Math.min(wrap.clientWidth, wrap.clientHeight) - 30;
-    grid.style.setProperty('--cell', Math.max(26, Math.min(84, Math.floor(room / level.size))) + 'px');
+    grid.style.setProperty('--cell', Math.max(14, Math.min(84, Math.floor(room / level.size))) + 'px');
     grid.style.setProperty('--n', level.size);
   }
 

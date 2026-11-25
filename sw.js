@@ -1,6 +1,6 @@
 // Offline support: keep a copy of the whole app on the tablet.
 // Bump VERSION whenever files change so tablets pick up the new copy.
-const VERSION = 'turkey-time-v2';
+const VERSION = 'turkey-time-v3';
 const FILES = [
   './',
   'index.html',

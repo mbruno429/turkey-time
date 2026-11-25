@@ -200,11 +200,12 @@ p, h1, h2 { margin: 0; }
 }
 .cat.on { background: var(--kid); border-color: var(--kid); }
 .opts {
-  flex: 1 1 auto; min-height: 0; overflow-y: auto; display: grid; align-content: start;
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; display: grid; align-content: start; grid-auto-rows: max-content;
   grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 12px; padding: 6px;
 }
-.opt { aspect-ratio: 1; border-radius: 22px; background: #fff; border: 4px solid var(--line); overflow: hidden; box-shadow: var(--press); }
-.opt svg { width: 100%; height: 100%; display: block; }
+.opt { position: relative; border-radius: 22px; background: #fff; border: 4px solid var(--line); overflow: hidden; box-shadow: var(--press); }
+.opt::before { content: ""; display: block; padding-top: 100%; }
+.opt svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .opt.on { border-color: var(--kid); box-shadow: 0 0 0 5px var(--kid-soft); }
 .actions { display: flex; gap: 12px; flex: none; }
 .actions .big { flex: 1; padding: 8px 12px; }
@@ -348,9 +349,12 @@ p, h1, h2 { margin: 0; }
 @media (orientation: landscape) {
   .puzbody { grid-template-columns: minmax(0, 1fr) minmax(260px, 30%); }
   .cwbody { grid-template-columns: minmax(0, 1fr) minmax(340px, 44%); }
-  .wslist { flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: center; }
+  .wslist { flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: safe center; }
 }
-@media (orientation: portrait) { .puzbody { grid-template-rows: minmax(0, 1fr) auto; } }
+@media (orientation: portrait) {
+  .puzbody { grid-template-rows: minmax(0, 1fr) auto; }
+  .wslist { max-height: 30vh; }
+}
 
 .wsgrid {
   display: grid; grid-template-columns: repeat(var(--n, 6), var(--cell, 60px)); padding: 10px;
@@ -387,7 +391,7 @@ p, h1, h2 { margin: 0; }
 .cwcell.cursor { border-color: var(--kid); box-shadow: 0 0 0 4px var(--kid); z-index: 1; }
 .cwcell.bad { background: #F8B4A8; border-color: #C8472B; animation: shake .4s; }
 
-.cwpanel { min-height: 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.cwpanel { min-height: 0; min-width: 0; display: flex; flex-direction: column; justify-content: safe center; gap: 12px; overflow-y: auto; }
 .cwpanel > .big { align-self: center; }
 .clue { background: var(--paper); border: 3px solid var(--line); border-radius: 24px; padding: 12px 18px; text-align: center; }
 .cluenum { font-size: 20px; font-weight: 600; color: var(--kid); }
@@ -399,6 +403,45 @@ p, h1, h2 { margin: 0; }
 .key { min-height: 58px; border-radius: 14px; background: #fff; border: 3px solid var(--line); font-size: clamp(22px, 3.4vmin, 28px); font-weight: 600; box-shadow: var(--press); }
 .key.del { background: #FBE3D2; }
 .round:active, .key:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(90, 52, 24, .22); }
+
+/* ---------- phones and other small screens ---------- */
+@media (max-width: 600px), (max-height: 600px) {
+  .topbar { padding: 8px 12px; gap: 8px; }
+  .topbar h1 { font-size: 20px; }
+  .homebtn, .gear { width: 50px; height: 50px; font-size: 24px; }
+  .who { font-size: 16px; padding: 7px 12px; }
+  .kidchip { min-height: 46px; padding: 4px 14px; font-size: 18px; }
+  .big { min-height: 50px; font-size: 20px; padding: 6px 22px; }
+  .puzzle, .match { gap: 8px; }
+  .matchbar { gap: 6px; }
+  .sizes { gap: 6px; }
+  .sizebtn { min-height: 42px; padding: 4px 11px; font-size: 16px; white-space: nowrap; border-width: 2px; }
+  .moves { font-size: 16px; }
+  .puzbody { gap: 10px; }
+
+  .dress { gap: 10px; }
+  .panel { gap: 8px; }
+  .opts { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; }
+  .opt { border-width: 3px; border-radius: 16px; }
+  .cat { border-radius: 16px; }
+
+  .wsgrid { padding: 6px; border-width: 3px; border-radius: 16px; }
+  .wslist { gap: 6px; }
+  .wsword { font-size: 16px; padding: 3px 11px; border-width: 2px; }
+
+  .cwgrid { gap: 3px; }
+  .cwcell { border-width: 2px; }
+  .cwcell.cursor { box-shadow: 0 0 0 3px var(--kid); }
+  .cwpanel { gap: 8px; }
+  .clue { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; text-align: left; padding: 6px 12px; border-radius: 16px; border-width: 2px; }
+  .cluenum { grid-column: 2; font-size: 14px; }
+  .clueemoji { grid-column: 1; grid-row: 1 / span 2; font-size: 36px; }
+  .cluetext { grid-column: 2; font-size: 16px; }
+  .cwtools { gap: 10px; }
+  .round { width: 44px; height: 44px; font-size: 18px; border-width: 2px; }
+  .keys { gap: 5px; }
+  .key { min-height: 42px; font-size: 20px; border-width: 2px; border-radius: 10px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

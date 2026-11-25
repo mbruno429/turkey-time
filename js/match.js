@@ -51,7 +51,7 @@ export function match(root) {
       (wrap.clientHeight - gap * (size.rows - 1)) / size.rows,
       230,
     ));
-    board.style.setProperty('--s', Math.max(48, s) + 'px');
+    board.style.setProperty('--s', Math.max(30, s) + 'px');
     board.style.setProperty('--cols', size.cols);
   }
 

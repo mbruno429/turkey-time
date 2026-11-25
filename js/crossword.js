@@ -15,9 +15,11 @@ const key = (r, c) => r + ',' + c;
 
 // Lay words out so each new word crosses one already on the board, then number them like a real crossword.
 export function makeCrossword(level) {
+  const maxR = level.maxRows || level.max;
+  const maxC = level.maxCols || level.max;
   let best = null;
   for (let attempt = 0; attempt < 80; attempt++) {
-    const pool = shuffle(WORDS.filter(([w]) => w.length <= level.maxLen));
+    const pool = shuffle(WORDS.filter(([w]) => w.length <= level.maxLen && w.length <= Math.max(maxR, maxC)));
     const cells = new Map();
     const placed = [];
     const box = { r0: 0, r1: 0, c0: 0, c1: 0 };
@@ -42,8 +44,8 @@ export function makeCrossword(level) {
       const dc = dir ? 0 : 1;
       const L = w.length;
       if (cells.has(key(r - dr, c - dc)) || cells.has(key(r + dr * L, c + dc * L))) return false;
-      if (Math.max(box.r1, r + dr * (L - 1)) - Math.min(box.r0, r) >= level.max) return false;
-      if (Math.max(box.c1, c + dc * (L - 1)) - Math.min(box.c0, c) >= level.max) return false;
+      if (Math.max(box.r1, r + dr * (L - 1)) - Math.min(box.r0, r) >= maxR) return false;
+      if (Math.max(box.c1, c + dc * (L - 1)) - Math.min(box.c0, c) >= maxC) return false;
       let crosses = 0;
       for (let i = 0; i < L; i++) {
         const rr = r + dr * i;
@@ -59,7 +61,7 @@ export function makeCrossword(level) {
       return crosses > 0;
     };
 
-    put(pool.shift(), 0, 0, 0);
+    put(pool.splice(pool.findIndex(([w]) => w.length <= maxC), 1)[0], 0, 0, 0);
     let progress = true;
     while (placed.length < level.count && progress) {
       progress = false;
@@ -158,9 +160,21 @@ export function crossword(root) {
       (wrap.clientHeight - gap * (puz.rows - 1) - 8) / puz.rows,
       88,
     ));
-    grid.style.setProperty('--cell', Math.max(26, s) + 'px');
+    grid.style.setProperty('--cell', Math.max(14, s) + 'px');
     grid.style.setProperty('--cols', puz.cols);
     grid.style.setProperty('--rows', puz.rows);
+  }
+
+  // On a phone, make a smaller puzzle so its squares stay big enough to tap.
+  function sized() {
+    if (Math.min(innerWidth, innerHeight) >= 600) return level;
+    const portrait = innerHeight >= innerWidth;
+    const clamp = (v) => Math.max(5, Math.min(level.max, Math.floor(v / 32)));
+    return {
+      ...level,
+      maxRows: clamp(portrait ? innerHeight - 430 : innerHeight - 150),
+      maxCols: clamp(portrait ? innerWidth - 30 : innerWidth * 0.5),
+    };
   }
 
   const word = () => puz.words[cur];
@@ -299,7 +313,7 @@ export function crossword(root) {
 
   function deal() {
     clearTimeout(timer);
-    puz = makeCrossword(level);
+    puz = makeCrossword(sized());
     fill = new Map();
     locked = new Set();
     busy = false;
