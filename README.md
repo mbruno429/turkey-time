@@ -7,6 +7,8 @@ A Thanksgiving countdown and play app for kids, made for an Android tablet.
 - **Thankful Tree** – add leaves by picking a picture, drawing, or writing.
 - **Pie Match** – memory game with 4, 8, 12 or 16 cards.
 - **Catch the Feast** – slide the basket to catch falling food.
+- **Word Search** – find hidden Thanksgiving words; drag across a word, or tap its first and last letter.
+- **Crossword** – a new picture-clue crossword every time, with letter buttons so no keyboard is needed.
 
 Each kid has their own player button. Press and hold the gear on the home screen for grown-up settings
 (sound, names, little-kid or big-kid difficulty, reset).

@@ -7,9 +7,11 @@ import { dress } from './dress.js';
 import { tree } from './tree.js';
 import { match } from './match.js';
 import { catchGame } from './catch.js';
+import { wordsearch } from './wordsearch.js';
+import { crossword } from './crossword.js';
 
 const app = document.getElementById('app');
-const screens = { home, dress, tree, match, catch: catchGame };
+const screens = { home, dress, tree, match, catch: catchGame, wordsearch, crossword };
 let cleanup = null;
 
 function route() {
@@ -30,6 +32,8 @@ const TILES = [
   { id: 'tree', icon: '🍁', label: 'Thankful Tree' },
   { id: 'match', icon: '🥧', label: 'Pie Match' },
   { id: 'catch', icon: '🌽', label: 'Catch the Feast' },
+  { id: 'wordsearch', icon: '🔍', label: 'Word Search' },
+  { id: 'crossword', icon: '✏️', label: 'Crossword' },
 ];
 
 function home(root) {

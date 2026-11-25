@@ -1,6 +1,6 @@
 // Offline support: keep a copy of the whole app on the tablet.
 // Bump VERSION whenever files change so tablets pick up the new copy.
-const VERSION = 'turkey-time-v1';
+const VERSION = 'turkey-time-v2';
 const FILES = [
   './',
   'index.html',
@@ -19,6 +19,9 @@ const FILES = [
   'js/tree.js',
   'js/match.js',
   'js/catch.js',
+  'js/words.js',
+  'js/wordsearch.js',
+  'js/crossword.js',
 ];
 
 self.addEventListener('install', (e) => {
